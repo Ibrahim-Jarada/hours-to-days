@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            margin: calc(100vh/4) auto;
+            gap: 20px;
+            text-align: center;
+        }
+
+        input {
+            text-align: center
+        }
+    </style>
+</head>
+
+<body>
+    <label for="time">Time</label>
+    <input type="text" name="time" id="time">
+    <label for="days">Days</label>
+    <input type="text" name="days" id="days" disabled>
+    <button onclick="timeToWorkingDays()"> Calc</button>
+    <script>
+        function timeToWorkingDays() {
+            const time = document.getElementById('time')?.value?.trim();
+            const days = document.getElementById('days');
+            const timeArr = time.split(":");
+            if (timeArr.length !== 3) {
+                days.value = 'time should be in hh:mm:ss string format';
+                return;
+            }
+            const hours = +timeArr[0];
+            const minutes = +timeArr[1];
+            const seconds = +timeArr[2];
+            if (isNaN(hours) || isNaN(minutes) || isNaN(seconds) || hours < 0 || minutes < 0 || seconds < 0 || minutes >= 60 || seconds >= 60) {
+                days.value = 'wrong input value/s';
+                return;
+            }
+            console.log('after');
+            const decimalTime = +timeArr[0] + +timeArr[1] / 60 + +timeArr[2] / 3600
+            const decimalDays = decimalTime / 7.5;
+            days.value = -decimalDays.toFixed(2)
+        }
+    </script>
+</body>
+
+</html>
